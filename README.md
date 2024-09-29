@@ -13,9 +13,9 @@ The codes are almost the same as https://github.com/yuyikk/AVFFs-BOT, except an 
 
 ## How to run
 1. `cd build`
-2. `./doSimu generator_root_file runnumber`. 
+2. `./doSimu runnumber generator_root_file`. 
 
-    The `doSimu` accepts two arguements, the first is the root file from generator and the second is the runnumber that you can set freely.
+    The `doSimu` accepts two arguements, the first is the runnumber that you can set freely and the second is the converted root file from generator.
     
     You will get a root file `runnumber.BOT.root` in the current directory, in which a tree is stored and also a histogram storing number of generated enents. 
 
