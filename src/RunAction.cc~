@@ -1,0 +1,41 @@
+#include "RunAction.hh"
+#include "g4root_defs.hh"
+#include "EventAction.hh"
+RunAction::RunAction(EventAction *eventAction) : fEventAction(eventAction)
+{
+    G4AnalysisManager *analysisManager = G4AnalysisManager::Instance();
+    analysisManager->SetDefaultFileType("root");
+    analysisManager->SetVerboseLevel(1);
+    analysisManager->SetNtupleMerging(true);
+    analysisManager->SetFileName("default.root");
+}
+// MyRunAction::~MyRunAction()
+// {
+
+// }
+void RunAction::BeginOfRunAction(const G4Run *run)
+{
+    G4AnalysisManager *analysisManager = G4AnalysisManager::Instance();
+    analysisManager->Reset();
+    analysisManager->OpenFile("mytree.root");
+
+    analysisManager->CreateNtuple("NeutronEdep", "Neutron_Energy_Deposits");
+    analysisManager->CreateNtupleIColumn("EventId");
+    analysisManager->CreateNtupleIColumn("RowId", fEventAction->GetTOFRowIdVector());
+    analysisManager->CreateNtupleIColumn("ColumnId", fEventAction->GetTOFColumnIdVector());
+    analysisManager->CreateNtupleIColumn("LayerId", fEventAction->GetTOFLayerIdVector());
+    analysisManager->CreateNtupleDColumn("TOFModuleEdep", fEventAction->GetTOFHitEdep());
+    analysisManager->CreateNtupleDColumn("TOFEdep");
+    analysisManager->FinishNtuple(0);
+    // analysisManager->SetNtupleFileName("NeutronEdep_ntuple.root");
+
+    // analysisManager->SetNtupleFileName("NeutronEdep");
+}
+void RunAction::EndOfRunAction(const G4Run *run)
+{
+    G4cout << "End of runs" << G4endl;
+    G4AnalysisManager *analysisManager = G4AnalysisManager::Instance();
+    analysisManager->Write();
+    G4cout << "filename: " << analysisManager->GetFileName() << G4endl;
+    analysisManager->CloseFile();
+}

@@ -1,0 +1,9 @@
+#!/bin/zsh
+macro=AVFFInputFileConverter.cxx
+exe=`basename $macro .cxx`.exe
+echo $macro $exe
+if [ ! -f $macro ];then
+	echo "$macro not found"
+	return -1
+fi
+g++ -o $exe $macro `root-config --cflags --libs` -lMinuit -Wno-deprecated

@@ -1,0 +1,18 @@
+#ifndef _RUNAction_HH_
+#define _RUNAction_HH_
+#include "G4UserRunAction.hh"
+#include "G4AnalysisManager.hh"
+#include "g4root_defs.hh"
+#include "globals.hh"
+class EventAction;
+class RunAction : public G4UserRunAction
+{
+    public:
+        RunAction(EventAction *eventAction);
+        ~RunAction() override = default;
+        virtual void BeginOfRunAction(const G4Run *) override;
+        virtual void EndOfRunAction(const G4Run *) override;
+    private:
+        EventAction *fEventAction = nullptr;
+};
+#endif
