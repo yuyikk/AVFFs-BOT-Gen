@@ -38,7 +38,7 @@ G4int GetHCalLayerId(G4int copyNum);
 G4int ConvertCopyNumber(G4int copyNum, G4int axis);
 TOFSD::TOFSD(G4String name, G4String abbrev) : StandardDetectorSD(name, abbrev), fTotalEdep(0), fTotalTrackLength(0)
 {
-  collectionName.insert("TOFCollection");
+  collectionName.insert("TOFSDColl");
 }
 TOFSD::~TOFSD()
 {

@@ -297,7 +297,7 @@ G4VPhysicalVolume *DetConstruction::Construct()
 void DetConstruction::ConstructSDandField()
 {
     G4SDManager *sdMan = G4SDManager::GetSDMpointer();
-    G4String sdName = "/TOF";
+    G4String sdName = "TOF";
     StandardDetectorSD *sdDet1 = new StandardDetectorSD("Virtual", "");
     TOFSD *sdTOF = new TOFSD(sdName, "");
     sdMan->AddNewDetector(sdDet1);
