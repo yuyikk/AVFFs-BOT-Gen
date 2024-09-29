@@ -180,10 +180,10 @@ void TOFSD::EndOfEvent(G4HCofThisEvent *HCE)
   for (int i = 0; i < fN; ++i)
   {
     StandardHit *hit = (*fHitsCollection)[i];
-    if (hit->GetEdep() <= 0)
-    {
-      continue;
-    }
+    // if (hit->GetEdep() <= 0)
+    // {
+    //   continue;
+    // }
     fPID.push_back(hit->GetPID());
     fTID.push_back(hit->GetTrackID());
     fPTID.push_back(hit->GetParentTrackID());
