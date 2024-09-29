@@ -33,7 +33,7 @@ protected:
   TOFHitsCollection *fTOFHitsCollection = nullptr;
   float fTotalEdep;
   float fTotalTrackLength;
-  std::vector<short> fModuleID;
+  std::vector<int> fModuleID;
   std::vector<float> fModuleEdep;
   std::vector<float> fModuleTrackLength;
 };

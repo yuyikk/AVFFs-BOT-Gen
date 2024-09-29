@@ -29,11 +29,11 @@ class StandardDetectorSD : public G4VSensitiveDetector
         StandardHitsCollection *fHitsCollection;
         G4bool fRegistered;
         short fN;
-        std::vector<short> fPID;
-        std::vector<short> fTID;
-        std::vector<short> fPTID;
-        std::vector<short> fDID;
-        std::vector<short> fProcessID;
+        std::vector<int> fPID;
+        std::vector<int> fTID;
+        std::vector<int> fPTID;
+        std::vector<int> fDID;
+        std::vector<int> fProcessID;
         std::vector<float> fX;
         std::vector<float> fY;
         std::vector<float> fZ;

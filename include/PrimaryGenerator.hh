@@ -18,7 +18,7 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
     private:
         G4bool fRegistered = false;
         G4ParticleGun *fParticleGun;
-        std::vector<short> fPDGID;
+        std::vector<int> fPDGID;
         std::vector<float> fPx;
         std::vector<float> fPy;
         std::vector<float> fPz;

@@ -185,6 +185,7 @@ void TOFSD::EndOfEvent(G4HCofThisEvent *HCE)
     //   continue;
     // }
     fPID.push_back(hit->GetPID());
+    // G4cout << hit->GetPID() << G4endl;
     fTID.push_back(hit->GetTrackID());
     fPTID.push_back(hit->GetParentTrackID());
     fDID.push_back(hit->GetDetectorID());
