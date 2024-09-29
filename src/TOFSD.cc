@@ -220,7 +220,6 @@ void TOFSD::EndOfEvent(G4HCofThisEvent *HCE)
 void TOFSD::RegisterTree(TTree *tree)
 {
   G4cout << "Building ROOT Tree..." << G4endl;
-  tree->Branch("TOF.NHits", &fN, "NHits/I");
   tree->Branch("TOF.PDGID", &fPID);
   tree->Branch("TOF.TrackID", &fTID);
   tree->Branch("TOF.ParentTrackID", &fPTID);
@@ -242,8 +241,8 @@ void TOFSD::RegisterTree(TTree *tree)
   tree->Branch("TOF.HitEdep", &fEdep);
   tree->Branch("TOF.TrackLength", &fTrackL);
   tree->Branch("TOF.ModuleID", &fModuleID);
-  tree->Branch("TOF.TotalEdep", &fTotalEdep, "TOF.TotalEdep/D");
-  tree->Branch("TOF.TotalTrackLength", &fTotalTrackLength, "TOF.TotalTrackLength/D");
+  tree->Branch("TOF.TotalEdep", &fTotalEdep, "TOF.TotalEdep/F");
+  tree->Branch("TOF.TotalTrackLength", &fTotalTrackLength, "TOF.TotalTrackLength/F");
   tree->Branch("TOF.ModuleEdep", &fModuleEdep);
   tree->Branch("TOF.ModuleTrackLength", &fModuleTrackLength);
 }

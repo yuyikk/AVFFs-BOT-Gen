@@ -4,6 +4,7 @@
 #include "GlobalVars.hh"
 #include "TRandom3.h"
 #include "GeneratorTree.hh"
+#include "RootTree.hh"
 #include <time.h>
 G4ThreeVector GenPrimaryVertex();
 PrimaryGenerator::PrimaryGenerator() : fParticleGun(nullptr)
@@ -12,14 +13,22 @@ PrimaryGenerator::PrimaryGenerator() : fParticleGun(nullptr)
 }
 PrimaryGenerator::~PrimaryGenerator()
 {
+    Clear();
     delete fParticleGun;
 }
 void PrimaryGenerator::GeneratePrimaries(G4Event *myEvt)
 {
+    Clear();
+    if (!fRegistered)
+    {
+        RegisterTree(gRootTree->GetTree());
+        fRegistered = true;
+    }
     gGeneratorTree->GetEvent(myEvt->GetEventID());
     G4int nPart = gGeneratorTree->GetNumberOfParticle();
     G4ParticleTable *partTable = G4ParticleTable::GetParticleTable();
     // G4cout << "#particle: " << nPart << G4endl;
+    G4ThreeVector vertex = GenPrimaryVertex();
     for (int i = 0; i < nPart; ++i)
     {
         G4int pdgid = gGeneratorTree->GetPdgID(i);
@@ -35,7 +44,7 @@ void PrimaryGenerator::GeneratePrimaries(G4Event *myEvt)
         G4double Ek = Etot - mass;
         // G4cout << "Part Info: " << pdgid << "\t" << Px << "\t" << Py << "\t" << Pz << "\t" << Etot << "\t" << mass << "\t" << Ek << G4endl;
         
-        G4ThreeVector vertex = GenPrimaryVertex();
+        
         // if (vertex.x() * vertex.x() + vertex.y() * vertex.y() > 1 * cm * 1 * cm)
         // G4cout << "Vertex Info: " << vertex.x() / cm << "\t" << vertex.y() / cm << "\t" << vertex.z() / cm << G4endl;
         fParticleGun->SetParticleDefinition(partDef);
@@ -44,8 +53,39 @@ void PrimaryGenerator::GeneratePrimaries(G4Event *myEvt)
         fParticleGun->SetParticlePosition(vertex);
         // Generate the particle in the event
         fParticleGun->GeneratePrimaryVertex(myEvt);
+
+        fPDGID.push_back(pdgid);
+        fPx.push_back(Px);
+        fPy.push_back(Py);
+        fPz.push_back(Pz);
+        fX.push_back(vertex.getX() / cm);
+        fY.push_back(vertex.getY() / cm);
+        fZ.push_back(vertex.getZ() / cm);
+        // G4cout << x << "\t" << y << "\t" << z << G4endl;
     }
     // G4cout << "-- -- -- -- -- -- -- -- -- --" << G4endl;
+}
+
+void PrimaryGenerator::RegisterTree(TTree *t)
+{
+    t->Branch("GenPart.PDGID", &fPDGID);
+    t->Branch("GenPart.Px", &fPx);
+    t->Branch("GenPart.Py", &fPy);
+    t->Branch("GenPart.Pz", &fPz);
+    t->Branch("GenPart.X", &fX);
+    t->Branch("GenPart.Y", &fY);
+    t->Branch("GenPart.Z", &fZ);
+}
+
+void PrimaryGenerator::Clear()
+{
+    fPDGID.clear();
+    fPx.clear();
+    fPy.clear();
+    fPz.clear();
+    fX.clear();
+    fY.clear();
+    fZ.clear();
 }
 G4ThreeVector GenPrimaryVertex()
 {
@@ -64,6 +104,6 @@ G4ThreeVector GenPrimaryVertex()
         y = rnd.Uniform(-r_max, r_max);
         r = std::sqrt(x * x + y * y);
     }
-    z = rnd.Uniform(-z_max, z_max);
+    z = rnd.Uniform(MyTarget::kPosZ - z_max, MyTarget::kPosZ + z_max);
     return G4ThreeVector(x, y, z);
 }

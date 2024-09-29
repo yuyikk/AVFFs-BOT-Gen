@@ -207,7 +207,6 @@ void StandardDetectorSD::EndOfEvent(G4HCofThisEvent *HCE)
 }
 void StandardDetectorSD::RegisterTree(TTree *tree)
 {
-    tree->Branch("NHits", &fN, "NHits/I");
     tree->Branch("PDGID", &fPID);
     tree->Branch("TrackID", &fTID);
     tree->Branch("ParentTrackID", &fPTID);

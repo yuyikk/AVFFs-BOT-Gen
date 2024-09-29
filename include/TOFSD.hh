@@ -31,11 +31,11 @@ protected:
   virtual void RegisterTree(TTree *) override;
   virtual void Clear() override;
   TOFHitsCollection *fTOFHitsCollection = nullptr;
-  G4double fTotalEdep;
-  G4double fTotalTrackLength;
-  std::vector<G4int> fModuleID;
-  std::vector<G4double> fModuleEdep;
-  std::vector<G4double> fModuleTrackLength;
+  float fTotalEdep;
+  float fTotalTrackLength;
+  std::vector<short> fModuleID;
+  std::vector<float> fModuleEdep;
+  std::vector<float> fModuleTrackLength;
 };
 // inline void TOFSD::SetReflectanceLG(const G4double &val)
 // {
