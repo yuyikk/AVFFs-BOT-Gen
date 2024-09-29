@@ -180,7 +180,7 @@ G4VPhysicalVolume *DetConstruction::Construct()
     new G4PVPlacement(0, MagnetPos, logicBField, "physBField", logicArmHad, false, 0, true);
 
     // Place a virtual detector in front of the magnet
-    G4Box *solidVrt1 = new G4Box("solidVrt1", MyMagnet::kSizeX / 2, MyMagnet::kSizeY / 2, 0.5 * um);
+    G4Box *solidVrt1 = new G4Box("solidVrt1", MyMagnet::kFieldSizeX / 2, MyMagnet::kFieldSizeY / 2, 0.5 * um);
     G4LogicalVolume *logicVrt1 = new G4LogicalVolume(solidVrt1, Vacuum, "logicVrt1");
     G4ThreeVector Vrt1Pos = G4ThreeVector(MyMagnet::kPosX, MyMagnet::kPosY, MyMagnet::kPosZ - MyMagnet::kSizeZ / 2 - 0.5 * um);
     new G4PVPlacement(0, Vrt1Pos, logicVrt1, "physVrt1", logicArmHad, false, 10001, true);
