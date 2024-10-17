@@ -29,12 +29,14 @@ int main(int argc, char *argv[])
 {
     TString ofilename = Form("%s.BOT.root", argv[1]);
     gRootTree = new RootTree(ofilename);
+    TH1I *h_event = new TH1I("h_event", "Number of events generated in the simulation", 1, 0, 1);
 
     // load generator data
     // TFile *generatorFile = TFile::Open(argv[3]);
     gGeneratorTree = new GeneratorTree(argv[2]);
     gGeneratorTree->InitTree();
     G4int nEvent = gGeneratorTree->GetNumberOfEvent();
+    h_event->SetBinContent(1, nEvent);
 
     G4Random::setTheEngine(new CLHEP::Ranlux64Engine);
 
@@ -87,8 +89,8 @@ int main(int argc, char *argv[])
     {
         ui->SessionStart();
     }
-    TH1I *h_event = new TH1I("h_event", "Number of events generated in the simulation", 1, 0, 1);
-    h_event->SetBinContent(1, nEvent);
+
+    // h_event->SetDirectory(ofilename);
 
     // delete ui;
     // delete visManager;
